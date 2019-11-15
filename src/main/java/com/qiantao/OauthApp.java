@@ -3,8 +3,6 @@ package com.qiantao;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
-
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

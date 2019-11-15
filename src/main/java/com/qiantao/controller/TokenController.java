@@ -3,16 +3,15 @@ package com.qiantao.controller;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qiantao.mapper.LoginMapper;
 import com.qiantao.util.RedisUtil;
 import com.qiantao.util.ResponseUtil;
 
-import io.lettuce.core.dynamic.annotation.Param;
 
 @Controller
 @RequestMapping("/oauth/token")
@@ -29,7 +28,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("update")
-	public String update(@Param("token")String token) {
+	public String update(@RequestParam("token")String token) {
 		Object str=redisUtil.getCache(token);
 		if(str==null)
 			return ResponseUtil.createResponse(0,"当前token已经过期,请重新申请");
@@ -44,7 +43,7 @@ public class TokenController {
 	/**
 	 * 根据token获取openId
 	 */
-	public String getOpenId(@Param("token")String token) {
+	public String getOpenId(@RequestParam("token")String token) {
 		Object str=redisUtil.getCache(token);
 		if(str==null)
 			return ResponseUtil.createResponse(0,"当前token已经过期,请重新申请");
@@ -57,7 +56,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("delete")
-	public String delete(@Param("token")String token) {
+	public String delete(@RequestParam("token")String token) {
 		redisUtil.removeCache(token);
 		return ResponseUtil.createResponse(1,"注销成功");
 	}
@@ -67,7 +66,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("check")
-	public String check(@Param("token")String token) {
+	public String check(@RequestParam("token")String token) {
 		Object str=redisUtil.getCache(token);
 		if(str==null)
 			return ResponseUtil.createResponse(0,"当前token已经过期,请重新申请");
